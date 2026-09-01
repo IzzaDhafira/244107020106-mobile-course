@@ -37,14 +37,14 @@
 
 ### 2. Hasil Pengujian (Testing & Analyze)
 * **Flutter Analyze:** Kode bersih tanpa ada error maupun warning.
-`![Hasil Flutter Analyze](screenshots/hasil_flutter_analyze.png)`
+![Hasil Flutter Analyze](screenshots/hasil_flutter_analyze.png)
 
 * **Flutter Test:** Pengujian otomatis menggunakan override ukuran layar (Size(400, 800) dan Size(1200, 800) dengan penambahan selektor .first) berhasil lulus 100%.
-`![Hasil Flutter Test](screenshots/hasil_flutter_test.png)`
+![Hasil Flutter Test](screenshots/hasil_flutter_test.png)
 
 ### 3. Bukti Tangkapan Layar (Screenshots)
 * **Tampilan Layar Sempit (1 Kolom):**
-  `![Mobile View](screenshots/refactoring_light_mobile.jpeg)`
+  ![Mobile View](screenshots/refactoring_light_mobile.jpeg)
 
 * **Tampilan Layar Lebar (2 Kolom):**
-  `![Tablet View](screenshots/refactoring_light_tablet.jpeg)`
+  ![Tablet View](screenshots/refactoring_light_tablet.jpeg)
