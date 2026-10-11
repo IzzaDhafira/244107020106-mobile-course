@@ -13,21 +13,24 @@ Repository ini berisi hasil *refactoring* proyek `campus_notify` dari struktur m
 ---
 
 ## Diagram Layer & Arah Dependensi
-┌────────────────────────────────────────────────────────┐
-│                   PRESENTATION LAYER                   │
-│          (Pages, Widgets, Riverpod Providers)          │
-└───────────────────────────┬────────────────────────────┘
-│ (depends on)
-▼
-┌────────────────────────────────────────────────────────┐
-│                      DOMAIN LAYER                      │
-│        (Entities, Use Cases, Repository Interfaces)    │
-└───────────────────────────▲────────────────────────────┘
-│ (implements)
-┌───────────────────────────┴────────────────────────────┘
-│                       DATA LAYER                       │
-│       (Models/DTOs, Repository Impl, Data Sources)     │
-└────────────────────────────────────────────────────────┘
+```text
++--------------------------------------------------------+
+|                   PRESENTATION LAYER                   |
+|          (Pages, Widgets, Riverpod Providers)          |
++---------------------------+----------------------------+
+                            | (depends on)
+                            v
++--------------------------------------------------------+
+|                      DOMAIN LAYER                      |
+|        (Entities, Use Cases, Repository Interfaces)    |
++---------------------------+----------------------------+
+                            ^ (implements)
+                            |
++---------------------------+----------------------------+
+|                       DATA LAYER                       |
+|       (Models/DTOs, Repository Impl, Data Sources)     |
++--------------------------------------------------------+
+```
 
 **Aturan Dependensi (*Dependency Rule*):**
 * **Presentation** $\rightarrow$ **Domain** $\leftarrow$ **Data**
@@ -75,7 +78,7 @@ week7_tugas/
     ├── firebase_options.dart
     ├── main.dart
     └── routes.dart
-
+```
 
 ---
 
