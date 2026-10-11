@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "695679791383",
+    "project_id": "campus-notify-tugas",
+    "storage_bucket": "campus-notify-tugas.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:695679791383:android:c071c03b57f2c793978752",
+        "android_client_info": {
+          "package_name": "com.example.week6_tugas"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBznl9hNz51fplANeIP4AJGn9dmLJIETV0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
