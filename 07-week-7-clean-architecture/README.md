@@ -42,8 +42,6 @@ Repository ini berisi hasil *refactoring* proyek `campus_notify` dari struktur m
 
 ```text
 week7_tugas/
-├── docs/
-│   └── ai_challenge.md
 ├── lib/
     ├── core/
     │   ├── api_client.dart
