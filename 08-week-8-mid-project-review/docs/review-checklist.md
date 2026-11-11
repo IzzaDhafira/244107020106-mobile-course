@@ -26,5 +26,5 @@
 - [x] Berkas `README.md` telah diperbarui memuat status paruh semester serta peta *issue/PR*.
 
 ## 4. Status Kesiapan
-- **Status Akhir**: **LOLOS / DEFINISI SELESAI** 🚀
+- **Status Akhir**: **LOLOS / DEFINISI SELESAI** 
 - **Catatan**: Fondasi aplikasi telah siap, stabil, dan dapat diandalkan untuk melanjutkan pengembangan di paruh kedua semester.
