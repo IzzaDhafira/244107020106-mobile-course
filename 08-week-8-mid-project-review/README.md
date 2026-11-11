@@ -28,12 +28,13 @@ Repositori ini berisi laporan status tengah semester, struktur arsitektur *featu
 ```text
 08-week-8-mid-project-review/
 ├── .github/workflows/ci.yml    # Konfigurasi Continuous Integration (CI)
-├── docs/                       # Dokumentasi checklist dan analisis AI
+├── docs/                       # Dokumentasi checklist, analisis AI, dan refleksi
 │   ├── review-checklist.md
-│   └── ai-review-vs-keputusan.md
-├── lib/                        # Kode sumber utama (Arsitektur Feature-First)
+│   ├── ai-review-vs-keputusan.md
+│   └── reflection.md
 ├── test/                       # Berkas unit test & widget test
-└── pubspec.yaml                # Konfigurasi dependensi proyek
+├── pubspec.yaml                # Konfigurasi dependensi proyek
+└── README.md                   # Dokumentasi utama mid-project
 ```
 
 ## Cara Menjalankan Proyek
