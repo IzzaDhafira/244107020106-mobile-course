@@ -162,6 +162,6 @@ void main() {
 
 **4. Hasil Testing**
 - flutter analyze: Lolos (Tidak ada isu atau warning).
-![Hasil Flutter Analyze](../screeshots/flutter_analyze.png)
+![Hasil Flutter Analyze](../screenshots/flutter_analyze.png)
 - flutter test: Lolos (Seluruh skenario pengujian mulai dari loading, simulasi error, hingga success merender 3 data berhasil dijalankan).
-![Hasil Flutter Test](../screeshots/flutter_test.png)
+![Hasil Flutter Test](../screenshots/flutter_test.png)
