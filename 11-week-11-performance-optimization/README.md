@@ -19,8 +19,7 @@ Optimasi performa rendering, pengurangan *widget rebuild*, *query caching*, dan 
 │   │       └── widgets/optimized_notes_page.dart
 │   └── main.dart
 ├── screenshots/
-│   ├── before-profile.png
-│   └── after-profile.png
+│   
 ├── test/
 │   └── performance_optimization_test.dart
 ├── pubspec.yaml
