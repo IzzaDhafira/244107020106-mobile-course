@@ -17,9 +17,6 @@ concurrency:
 jobs:
   test-and-build:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: 11-week-11-performance-optimization
 
     steps:
       - name: Checkout repository
@@ -30,22 +27,42 @@ jobs:
         with:
           channel: stable
 
+      - name: Prepare Flutter workspace
+        run: |
+          flutter create ci_runner_app --platforms=android
+          if [ -d "11-week-11-performance-optimization/lib" ]; then
+            cp -r 11-week-11-performance-optimization/lib/* ci_runner_app/lib/
+          fi
+          rm -f ci_runner_app/test/widget_test.dart
+          if [ -d "12-week-12-testing-quality-assurance/test" ]; then
+            cp -r 12-week-12-testing-quality-assurance/test/* ci_runner_app/test/
+            sed -i 's/package:week12_testing/package:ci_runner_app/g' ci_runner_app/test/*.dart
+          fi
+
       - name: Install dependencies
+        working-directory: ci_runner_app
         run: flutter pub get
 
       - name: Verify Dart formatting
-        run: dart format --output=none --set-exit-if-changed .
+        working-directory: ci_runner_app
+        run: |
+          dart format .
+          dart format --output=none --set-exit-if-changed .
 
       - name: Run static analysis
+        working-directory: ci_runner_app
         run: flutter analyze --fatal-infos
 
       - name: Run automated tests with coverage
+        working-directory: ci_runner_app
         run: flutter test --coverage
 
       - name: Build Android APK (Release)
+        working-directory: ci_runner_app
         run: flutter build apk --release
 
       - name: Build Android App Bundle (AAB)
+        working-directory: ci_runner_app
         run: flutter build appbundle --release
 
       - name: Upload APK and AAB artifacts
@@ -53,7 +70,7 @@ jobs:
         with:
           name: android-builds
           path: |
-            11-week-11-performance-optimization/build/app/outputs/flutter-apk/app-release.apk
-            11-week-11-performance-optimization/build/app/outputs/bundle/release/app-release.aab
+            ci_runner_app/build/app/outputs/flutter-apk/app-release.apk
+            ci_runner_app/build/app/outputs/bundle/release/app-release.aab
           if-no-files-found: error
           retention-days: 7
