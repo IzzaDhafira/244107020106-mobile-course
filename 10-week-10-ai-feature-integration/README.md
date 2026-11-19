@@ -26,10 +26,10 @@ Integrasi fitur **AI Chat Assistant** pada aplikasi Flutter menggunakan Gemini R
 
 | Risiko | Mitigasi yang Diterapkan |
 | :--- | :--- |
-| **Kebocoran API Key & Data Sensitif** | API key disimpan terenkripsi menggunakan `flutter_secure_storage` (tidak di-hardcode di Git); input pengguna dibatasi agar tidak mengirim NIK, nomor telepon, atau alamat[cite: 15, 16, 17]. |
-| **Biaya / Kuota API Melonjak** | Validasi input kosong sebelum *request*, mencegah pengiriman ganda saat status `_isLoading`, serta membatasi respons tetap ringkas melalui `systemInstruction`[cite: 17]. |
-| **API Error / Perangkat Offline** | Menangkap kegagalan HTTP/jaringan menggunakan `try-catch` dan menampilkan dialog *fallback* ramah (`Layanan AI Sibuk` dengan opsi mode *offline*)[cite: 17]. |
-| **Respons Tidak Relevan** | Menetapkan `systemInstruction` spesifik agar AI berperan sebagai asisten produktivitas catatan[cite: 17]. |
+| **Kebocoran API Key & Data Sensitif** | API key disimpan terenkripsi menggunakan `flutter_secure_storage` (tidak di-hardcode di Git); input pengguna dibatasi agar tidak mengirim NIK, nomor telepon, atau alamat. |
+| **Biaya / Kuota API Melonjak** | Validasi input kosong sebelum *request*, mencegah pengiriman ganda saat status `_isLoading`, serta membatasi respons tetap ringkas melalui `systemInstruction`. |
+| **API Error / Perangkat Offline** | Menangkap kegagalan HTTP/jaringan menggunakan `try-catch` dan menampilkan dialog *fallback* ramah (`Layanan AI Sibuk` dengan opsi mode *offline*). |
+| **Respons Tidak Relevan** | Menetapkan `systemInstruction` spesifik agar AI berperan sebagai asisten produktivitas catatan. |
 
 ## Cara Menjalankan & Menguji
 
