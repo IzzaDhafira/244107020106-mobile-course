@@ -1,0 +1,71 @@
+name: Flutter CI/CD Pipeline
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test-and-build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter SDK
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+
+      - name: Prepare Flutter workspace
+        run: |
+          flutter create ci_runner_app --platforms=android
+          cp -r 11-week-11-performance-optimization/lib/* ci_runner_app/lib/
+          cp -r 11-week-11-performance-optimization/test/* ci_runner_app/test/
+          sed -i 's/package:week11_performance/package:ci_runner_app/g' ci_runner_app/test/*.dart
+
+      - name: Install dependencies
+        working-directory: ci_runner_app
+        run: flutter pub get
+
+      - name: Verify Dart formatting
+        working-directory: ci_runner_app
+        run: |
+          dart format .
+          dart format --output=none --set-exit-if-changed .
+
+      - name: Run static analysis
+        working-directory: ci_runner_app
+        run: flutter analyze --fatal-infos
+
+      - name: Run automated tests with coverage
+        working-directory: ci_runner_app
+        run: flutter test --coverage
+
+      - name: Build Android APK (Release)
+        working-directory: ci_runner_app
+        run: flutter build apk --release
+
+      - name: Build Android App Bundle (AAB)
+        working-directory: ci_runner_app
+        run: flutter build appbundle --release
+
+      - name: Upload APK and AAB artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-builds
+          path: |
+            ci_runner_app/build/app/outputs/flutter-apk/app-release.apk
+            ci_runner_app/build/app/outputs/bundle/release/app-release.aab
+          if-no-files-found: error
+          retention-days: 7
