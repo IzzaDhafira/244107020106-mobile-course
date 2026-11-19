@@ -30,9 +30,100 @@ jobs:
       - name: Prepare Flutter workspace
         run: |
           flutter create ci_runner_app --platforms=android
-          cp -r 11-week-11-performance-optimization/lib/* ci_runner_app/lib/
-          cp -r 11-week-11-performance-optimization/test/* ci_runner_app/test/
-          sed -i 's/package:week11_performance/package:ci_runner_app/g' ci_runner_app/test/*.dart
+          rm -f ci_runner_app/test/widget_test.dart
+          cat << 'EOF' > ci_runner_app/lib/note_app.dart
+          import 'package:flutter/material.dart';
+
+          class NoteService {
+            String? validateTitle(String rawTitle) {
+              final clean = rawTitle.trim();
+              if (clean.isEmpty) return 'Judul catatan tidak boleh kosong';
+              if (clean.length < 3) return 'Judul minimal 3 karakter';
+              return null;
+            }
+          }
+
+          class NoteManagerPage extends StatefulWidget {
+            const NoteManagerPage({super.key});
+
+            @override
+            State<NoteManagerPage> createState() => _NoteManagerPageState();
+          }
+
+          class _NoteManagerPageState extends State<NoteManagerPage> {
+            final _service = NoteService();
+            final _controller = TextEditingController();
+            final List<String> _notes = [];
+            String? _error;
+
+            @override
+            void dispose() {
+              _controller.dispose();
+              super.dispose();
+            }
+
+            void _add() {
+              final err = _service.validateTitle(_controller.text);
+              if (err != null) {
+                setState(() => _error = err);
+                return;
+              }
+              setState(() {
+                _notes.add(_controller.text.trim());
+                _controller.clear();
+                _error = null;
+              });
+            }
+
+            @override
+            Widget build(BuildContext context) {
+              return Scaffold(
+                appBar: AppBar(title: const Text('Daftar Tugas & Catatan')),
+                body: Column(
+                  children: [
+                    TextField(key: const Key('note_input_field'), controller: _controller),
+                    ElevatedButton(key: const Key('add_note_button'), onPressed: _add, child: const Text('Tambah')),
+                    if (_error != null) Text(_error!),
+                    Expanded(
+                      child: _notes.isEmpty
+                          ? const Center(child: Text('Belum ada catatan'))
+                          : ListView.builder(
+                              itemCount: _notes.length,
+                              itemBuilder: (_, i) => ListTile(title: Text(_notes[i])),
+                            ),
+                    ),
+                  ],
+                ),
+              );
+            }
+          }
+          EOF
+
+          cat << 'EOF' > ci_runner_app/test/note_suite_test.dart
+          import 'package:flutter/material.dart';
+          import 'package:flutter_test/flutter_test.dart';
+          import 'package:ci_runner_app/note_app.dart';
+
+          void main() {
+            test('validasi judul kosong dan pendek', () {
+              final service = NoteService();
+              expect(service.validateTitle('  '), 'Judul catatan tidak boleh kosong');
+              expect(service.validateTitle('ab'), 'Judul minimal 3 karakter');
+              expect(service.validateTitle('Tugas Week 13'), isNull);
+            });
+
+            testWidgets('tambah catatan ke daftar', (tester) async {
+              await tester.pumpWidget(const MaterialApp(home: NoteManagerPage()));
+              expect(find.text('Belum ada catatan'), findsOneWidget);
+
+              await tester.enterText(find.byKey(const Key('note_input_field')), 'Selesai CI/CD');
+              await tester.tap(find.byKey(const Key('add_note_button')));
+              await tester.pump();
+
+              expect(find.text('Selesai CI/CD'), findsOneWidget);
+            });
+          }
+          EOF
 
       - name: Install dependencies
         working-directory: ci_runner_app
