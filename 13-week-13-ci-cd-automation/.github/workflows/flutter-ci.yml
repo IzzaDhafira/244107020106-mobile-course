@@ -32,6 +32,7 @@ jobs:
           flutter create ci_runner_app --platforms=android
           rm -f ci_runner_app/test/widget_test.dart
           cat << 'EOF' > ci_runner_app/lib/note_app.dart
+          // ignore_for_file: deprecated_member_use
           import 'package:flutter/material.dart';
 
           class NoteService {
@@ -100,6 +101,7 @@ jobs:
           EOF
 
           cat << 'EOF' > ci_runner_app/test/note_suite_test.dart
+          // ignore_for_file: deprecated_member_use
           import 'package:flutter/material.dart';
           import 'package:flutter_test/flutter_test.dart';
           import 'package:ci_runner_app/note_app.dart';
